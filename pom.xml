@@ -11,10 +11,8 @@
     <groupId>com.banco</groupId>
     <artifactId>practicantes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>practicantes</name>
-    <description>Registro y Evaluación de Practicantes</description>
     <properties>
-        <java.version>25</java.version>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -32,7 +30,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <version>42.7.5</version>
         </dependency>
     </dependencies>
     <build>
@@ -40,6 +38,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.4.4</version>
             </plugin>
         </plugins>
     </build>

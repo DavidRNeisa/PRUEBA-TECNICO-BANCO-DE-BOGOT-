@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Practicantes</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Registro de Practicantes</h1>
+        <div th:if="${mensaje}" class="alert success" th:text="${mensaje}"></div>
+        <div th:if="${error}" class="alert error" th:text="${error}"></div>
+        <form action="/api/practicantes" method="post" enctype="multipart/form-data">
+            <label>Nombre completo:</label>
+            <input type="text" name="nombreCompleto" required>
+            <label>Correo electrónico:</label>
+            <input type="email" name="correoElectronico" required>
+            <label>Carrera universitaria:</label>
+            <input type="text" name="carrera" required>
+            <label>Semestre actual:</label>
+            <input type="number" name="semestre" min="1" max="12" required>
+            <label>Hoja de vida (PDF):</label>
+            <input type="file" name="pdf" accept=".pdf" required>
+            <button type="submit">Enviar registro</button>
+        </form>
+        <a href="/">Volver al inicio</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Analista</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Panel de Evaluación - Practicantes</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th><th>Nombre</th><th>Correo</th><th>Carrera</th>
+                    <th>Semestre</th><th>Estado</th><th>Fecha</th><th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${practicantes}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.nombreCompleto}"></td>
+                    <td th:text="${p.correoElectronico}"></td>
+                    <td th:text="${p.carrera}"></td>
+                    <td th:text="${p.semestre}"></td>
+                    <td th:text="${p.estado}"></td>
+                    <td th:text="${#temporals.format(p.fechaRegistro, 'dd/MM/yyyy')}"></td>
+                    <td>
+                        <a th:href="@{'/api/practicantes/' + ${p.id} + '/pdf'}" target="_blank">Ver PDF</a>
+                        <form th:action="@{'/api/practicantes/' + ${p.id} + '/evaluar'}" method="post">
+                            <select name="estado">
+                                <option value="Viable">Viable</option>
+                                <option value="No Viable">No Viable</option>
+                            </select>
+                            <input type="text" name="comentarios" placeholder="Comentarios">
+                            <button type="submit">Evaluar</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/">Volver al inicio</a>
+    </div>
+</body>
+</html>

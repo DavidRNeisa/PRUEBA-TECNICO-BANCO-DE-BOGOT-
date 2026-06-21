@@ -1,2 +1,5 @@
+com/banco/practicantes/controllers/PracticanteController.class
+com/banco/practicantes/services/PracticanteService.class
+com/banco/practicantes/repositories/PracticanteRepository.class
 com/banco/practicantes/PracticantesApplication.class
 com/banco/practicantes/models/Practicante.class
