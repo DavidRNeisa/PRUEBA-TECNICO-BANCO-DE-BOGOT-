@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PracticanteService {
@@ -36,6 +37,22 @@ public class PracticanteService {
     
     public List<Practicante> listarTodos() {
         return repository.findAll();
+    }
+    
+    public List<Practicante> buscarConFiltros(String nombre, String correo, String carrera, 
+                                               Integer semestre, String estado) {
+        List<Practicante> todos = repository.findAll();
+        
+        return todos.stream()
+            .filter(p -> nombre == null || nombre.isEmpty() || 
+                    p.getNombreCompleto().toLowerCase().contains(nombre.toLowerCase()))
+            .filter(p -> correo == null || correo.isEmpty() || 
+                    p.getCorreoElectronico().toLowerCase().contains(correo.toLowerCase()))
+            .filter(p -> carrera == null || carrera.isEmpty() || 
+                    p.getCarrera().toLowerCase().contains(carrera.toLowerCase()))
+            .filter(p -> semestre == null || p.getSemestre().equals(semestre))
+            .filter(p -> estado == null || estado.isEmpty() || p.getEstado().equals(estado))
+            .collect(Collectors.toList());
     }
     
     public Optional<Practicante> buscarPorId(Long id) {

@@ -44,8 +44,19 @@ public class PracticanteController {
     }
     
     @GetMapping("/analista")
-    public String panelAnalista(Model model) {
-        model.addAttribute("practicantes", service.listarTodos());
+    public String panelAnalista(@RequestParam(required = false) String nombre,
+                                @RequestParam(required = false) String correo,
+                                @RequestParam(required = false) String carrera,
+                                @RequestParam(required = false) Integer semestre,
+                                @RequestParam(required = false) String estado,
+                                Model model) {
+        List<Practicante> practicantes;
+        if (nombre != null || correo != null || carrera != null || semestre != null || estado != null) {
+            practicantes = service.buscarConFiltros(nombre, correo, carrera, semestre, estado);
+        } else {
+            practicantes = service.listarTodos();
+        }
+        model.addAttribute("practicantes", practicantes);
         return "analista";
     }
     

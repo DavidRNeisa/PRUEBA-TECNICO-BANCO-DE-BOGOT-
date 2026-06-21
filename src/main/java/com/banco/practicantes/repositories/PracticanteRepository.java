@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface PracticanteRepository extends JpaRepository<Practicante, Long> {
     List<Practicante> findByEstado(String estado);
-    List<Practicante> findByCarrera(String carrera);
+    List<Practicante> findByCarreraContainingIgnoreCase(String carrera);
     boolean existsByCorreoElectronico(String correo);
+    List<Practicante> findByNombreCompletoContainingIgnoreCase(String nombre);
+    List<Practicante> findByCorreoElectronicoContainingIgnoreCase(String correo);
+    List<Practicante> findBySemestre(Integer semestre);
 }

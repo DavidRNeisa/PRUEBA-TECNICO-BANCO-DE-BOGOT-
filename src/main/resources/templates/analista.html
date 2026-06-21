@@ -9,36 +9,57 @@
 <body>
     <div class="container">
         <h1>Panel de Evaluación - Practicantes</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th><th>Nombre</th><th>Correo</th><th>Carrera</th>
-                    <th>Semestre</th><th>Estado</th><th>Fecha</th><th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="p : ${practicantes}">
-                    <td th:text="${p.id}"></td>
-                    <td th:text="${p.nombreCompleto}"></td>
-                    <td th:text="${p.correoElectronico}"></td>
-                    <td th:text="${p.carrera}"></td>
-                    <td th:text="${p.semestre}"></td>
-                    <td th:text="${p.estado}"></td>
-                    <td th:text="${#temporals.format(p.fechaRegistro, 'dd/MM/yyyy')}"></td>
-                    <td>
-                        <a th:href="@{'/api/practicantes/' + ${p.id} + '/pdf'}" target="_blank">Ver PDF</a>
-                        <form th:action="@{'/api/practicantes/' + ${p.id} + '/evaluar'}" method="post">
-                            <select name="estado">
-                                <option value="Viable">Viable</option>
-                                <option value="No Viable">No Viable</option>
-                            </select>
-                            <input type="text" name="comentarios" placeholder="Comentarios">
-                            <button type="submit">Evaluar</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        
+        <!-- Filtros -->
+        <div class="filtros">
+            <form action="/analista" method="get" class="form-filtros">
+                <input type="text" name="nombre" placeholder="Nombre">
+                <input type="text" name="correo" placeholder="Correo">
+                <input type="text" name="carrera" placeholder="Carrera">
+                <input type="number" name="semestre" placeholder="Semestre" min="1" max="12">
+                <select name="estado">
+                    <option value="">Todos</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Viable">Viable</option>
+                    <option value="No Viable">No Viable</option>
+                </select>
+                <button type="submit">Filtrar</button>
+                <a href="/analista" class="btn">Limpiar</a>
+            </form>
+        </div>
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Nombre</th><th>Correo</th><th>Carrera</th>
+                        <th>Sem</th><th>Estado</th><th>Fecha</th><th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${practicantes}">
+                        <td th:text="${p.id}"></td>
+                        <td th:text="${p.nombreCompleto}"></td>
+                        <td th:text="${p.correoElectronico}"></td>
+                        <td th:text="${p.carrera}"></td>
+                        <td th:text="${p.semestre}"></td>
+                        <td><span class="estado" th:text="${p.estado}"></span></td>
+                        <td th:text="${#temporals.format(p.fechaRegistro, 'dd/MM/yyyy')}"></td>
+                        <td class="acciones">
+                            <a th:href="@{'/api/practicantes/' + ${p.id} + '/pdf'}" target="_blank">Ver PDF</a>
+                            <form th:action="@{'/api/practicantes/' + ${p.id} + '/evaluar'}" method="post">
+                                <select name="estado">
+                                    <option value="Viable">Viable</option>
+                                    <option value="No Viable">No Viable</option>
+                                </select>
+                                <input type="text" name="comentarios" placeholder="Comentarios">
+                                <button type="submit">Evaluar</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <a href="/">Volver al inicio</a>
     </div>
 </body>
