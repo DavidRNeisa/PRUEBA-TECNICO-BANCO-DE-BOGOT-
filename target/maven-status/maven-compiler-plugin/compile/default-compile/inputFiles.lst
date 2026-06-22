@@ -1,5 +1,9 @@
 /home/davidrneisa/Documentos/Universidad/PRUEBA-TECNICO-BANCO-DE-BOGOT-/src/main/java/com/banco/practicantes/PracticantesApplication.java
+/home/davidrneisa/Documentos/Universidad/PRUEBA-TECNICO-BANCO-DE-BOGOT-/src/main/java/com/banco/practicantes/config/SecurityConfig.java
 /home/davidrneisa/Documentos/Universidad/PRUEBA-TECNICO-BANCO-DE-BOGOT-/src/main/java/com/banco/practicantes/controllers/PracticanteController.java
+/home/davidrneisa/Documentos/Universidad/PRUEBA-TECNICO-BANCO-DE-BOGOT-/src/main/java/com/banco/practicantes/models/HistorialEvaluacion.java
 /home/davidrneisa/Documentos/Universidad/PRUEBA-TECNICO-BANCO-DE-BOGOT-/src/main/java/com/banco/practicantes/models/Practicante.java
+/home/davidrneisa/Documentos/Universidad/PRUEBA-TECNICO-BANCO-DE-BOGOT-/src/main/java/com/banco/practicantes/models/Usuario.java
+/home/davidrneisa/Documentos/Universidad/PRUEBA-TECNICO-BANCO-DE-BOGOT-/src/main/java/com/banco/practicantes/repositories/HistorialEvaluacionRepository.java
 /home/davidrneisa/Documentos/Universidad/PRUEBA-TECNICO-BANCO-DE-BOGOT-/src/main/java/com/banco/practicantes/repositories/PracticanteRepository.java
 /home/davidrneisa/Documentos/Universidad/PRUEBA-TECNICO-BANCO-DE-BOGOT-/src/main/java/com/banco/practicantes/services/PracticanteService.java

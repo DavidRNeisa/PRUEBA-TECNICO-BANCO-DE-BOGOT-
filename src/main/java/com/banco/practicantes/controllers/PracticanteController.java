@@ -64,6 +64,13 @@ public class PracticanteController {
         return "analista";
     }
     
+    @GetMapping("/analista/historial/{id}")
+    public String verHistorial(@PathVariable Long id, Model model) {
+        model.addAttribute("practicante", service.buscarPorId(id).orElse(null));
+        model.addAttribute("historial", service.obtenerHistorial(id));
+        return "historial";
+    }
+    
     @PostMapping("/api/practicantes/{id}/evaluar")
     public String evaluar(@PathVariable Long id,
                          @RequestParam String estado,
@@ -78,11 +85,13 @@ public class PracticanteController {
         Optional<Practicante> opt = service.buscarPorId(id);
         if (opt.isEmpty()) return ResponseEntity.notFound().build();
         try {
-            Path ruta = Paths.get("uploads", opt.get().getRutaPdf());
+            Practicante p = opt.get();
+            Path ruta = Paths.get("uploads", p.getRutaPdf());
             Resource recurso = new UrlResource(ruta.toUri());
+            String nombreDescarga = "HV_" + p.getNombreCompleto().replaceAll(" ", "_") + ".pdf";
             return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + nombreDescarga + "\"")
                 .body(recurso);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();

@@ -65,7 +65,8 @@
                         <td th:text="${p.comentarios}"></td>
                         <td th:text="${#temporals.format(p.fechaRegistro, 'dd/MM/yyyy')}"></td>
                         <td class="acciones">
-                            <a th:href="@{'/api/practicantes/' + ${p.id} + '/pdf'}" target="_blank">Ver PDF</a>
+                            <a th:href="@{'/api/practicantes/' + ${p.id} + '/pdf'}">Descargar PDF</a>
+                            <a th:href="@{'/analista/historial/' + ${p.id}}">Historial</a>
                             <form th:action="@{'/api/practicantes/' + ${p.id} + '/evaluar'}" method="post">
                                 <select name="estado">
                                     <option value="Viable">Viable</option>

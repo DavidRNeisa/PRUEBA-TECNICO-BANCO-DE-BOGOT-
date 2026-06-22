@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Evaluaciones</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Historial de Evaluaciones</h1>
+        <div th:if="${practicante}">
+            <p><strong>Practicante:</strong> <span th:text="${practicante.nombreCompleto}"></span></p>
+            <p><strong>Estado actual:</strong> <span th:text="${practicante.estado}"></span></p>
+        </div>
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th><th>Analista</th><th>Estado Ant.</th>
+                        <th>Estado Nuevo</th><th>Observación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="h : ${historial}">
+                        <td th:text="${#temporals.format(h.fechaEvaluacion, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td th:text="${h.analista}"></td>
+                        <td th:text="${h.estadoAnterior}"></td>
+                        <td th:text="${h.estadoNuevo}"></td>
+                        <td th:text="${h.observacion}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a href="/analista">Volver al panel</a>
+    </div>
+</body>
+</html>

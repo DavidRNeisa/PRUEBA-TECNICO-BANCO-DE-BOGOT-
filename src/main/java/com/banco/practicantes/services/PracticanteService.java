@@ -1,8 +1,11 @@
 package com.banco.practicantes.services;
 
+import com.banco.practicantes.models.HistorialEvaluacion;
 import com.banco.practicantes.models.Practicante;
+import com.banco.practicantes.repositories.HistorialEvaluacionRepository;
 import com.banco.practicantes.repositories.PracticanteRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -14,12 +17,14 @@ import java.util.stream.Collectors;
 public class PracticanteService {
     
     private final PracticanteRepository repository;
+    private final HistorialEvaluacionRepository historialRepository;
     
     @Value("${file.upload-dir}")
     private String uploadDir;
     
-    public PracticanteService(PracticanteRepository repository) {
+    public PracticanteService(PracticanteRepository repository, HistorialEvaluacionRepository historialRepository) {
         this.repository = repository;
+        this.historialRepository = historialRepository;
     }
     
     public Practicante registrar(Practicante p, MultipartFile pdf) throws IOException {
@@ -69,8 +74,24 @@ public class PracticanteService {
     public Practicante evaluar(Long id, String estado, String comentarios) {
         Practicante p = repository.findById(id)
             .orElseThrow(() -> new RuntimeException("Practicante no encontrado"));
+        
+        // Guardar historial
+        String analista = SecurityContextHolder.getContext().getAuthentication().getName();
+        HistorialEvaluacion h = new HistorialEvaluacion();
+        h.setPracticanteId(id);
+        h.setAnalista(analista);
+        h.setEstadoAnterior(p.getEstado());
+        h.setEstadoNuevo(estado);
+        h.setObservacion(comentarios);
+        historialRepository.save(h);
+        
+        // Actualizar practicante
         p.setEstado(estado);
         p.setComentarios(comentarios);
         return repository.save(p);
+    }
+    
+    public List<HistorialEvaluacion> obtenerHistorial(Long practicanteId) {
+        return historialRepository.findByPracticanteIdOrderByFechaEvaluacionDesc(practicanteId);
     }
 }
