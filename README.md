@@ -1,66 +1,92 @@
-# PRUEBA-TECNICO-BANCO-DE-BOGOTA
+# Sistema de Registro y Evaluación de Practicantes
 
-Claro. Te dejo una versión más clara, formal y bien redactada del contexto y la especificación del proyecto, sin emojis:
+Aplicación web para el registro de practicantes universitarios y su evaluación por parte de analistas de selección.
 
----
+## Tecnologías
 
-## Contexto del proyecto
+- Java 25 + Spring Boot 3.4
+- PostgreSQL 17
+- Spring Security (autenticación)
+- Thymeleaf (templates)
+- HTML5 + CSS3 (responsive)
+- Maven
 
-El objetivo de este proyecto es desarrollar una herramienta web sencilla que permita a los practicantes registrar su información mediante un formulario, y que posteriormente los analistas de selección puedan revisar y gestionar dicha información. La aplicación contará con dos módulos principales: uno orientado al registro de practicantes y otro destinado a la consulta y evaluación de candidatos por parte de los analistas.
+## Estructura del Proyecto
 
-En el módulo de practicantes, los usuarios podrán ingresar sus datos personales y académicos, así como cargar su hoja de vida en formato PDF. En el módulo de analistas, se podrá visualizar el listado de practicantes registrados, consultar su información detallada y asignarles un estado de evaluación como “viable” o “no viable”.
+├── src/main/java/com/banco/practicantes/
+│   ├── config/          # Seguridad y configuración
+│   ├── controllers/     # Controladores MVC
+│   ├── models/          # Entidades JPA
+│   ├── repositories/    # Interfaces JPA
+│   └── services/        # Lógica de negocio
+├── src/main/resources/
+│   ├── static/css/      # Estilos
+│   └── templates/       # Vistas Thymeleaf
+└── uploads/             # Hojas de vida PDF
 
-Este desarrollo podrá realizarse con cualquier lenguaje de programación o framework conocido por el equipo, utilizando herramientas gratuitas o con licencia académica. No es obligatorio desplegar la aplicación en la nube, ya que puede ejecutarse de manera local.
+## Funcionalidades
 
-Además, el proyecto incluirá acompañamiento durante el proceso de desarrollo, fomentando la democratización del conocimiento dentro del equipo. Para ello, se contará con liderazgo de equipo y se creará un grupo en Microsoft Teams con el fin de resolver dudas, compartir avances y facilitar la comunicación entre los integrantes.
+### Para Practicantes
+- Formulario de registro con datos personales y académicos
+- Carga de hoja de vida en PDF
+- Confirmación visual al enviar
 
----
+### Para Analistas (requiere login)
+- Dashboard con métricas: total, pendientes, viables, no viables
+- Tabla con todos los candidatos registrados
+- Filtros por nombre, correo, carrera, semestre y estado
+- Evaluación: marcar como Viable o No Viable con observaciones
+- Historial de evaluaciones: quién evaluó, cuándo y qué comentó
+- Descarga de hojas de vida en PDF
+- Responsive: se adapta a móviles y tablets
 
-## Especificación funcional
+## Instalación
 
-### 1. Módulo de registro para practicantes
+### Requisitos
+- Java 21+
+- PostgreSQL 17
+- Maven 3.9+
 
-El sistema deberá permitir que los practicantes diligencien un formulario con los siguientes campos obligatorios:
+### Base de datos
+CREATE DATABASE practicantes_db;
 
-* Nombre completo
-* Correo electrónico
-* Carrera universitaria
-* Semestre actual
-* Carga de archivo: hoja de vida en formato PDF
+### Configuración
+Editar src/main/resources/application.properties:
+spring.datasource.url=jdbc:postgresql://localhost:5432/practicantes_db
+spring.datasource.username=TU_USUARIO
+spring.datasource.password=TU_CONTRASEÑA
 
-El formulario debe incluir validaciones básicas para asegurar que los campos obligatorios no estén vacíos y que el archivo cargado cumpla con el formato requerido.
+### Ejecutar
+mvn spring-boot:run
+Acceder en: http://localhost:8080
 
-### 2. Panel de analista
+## Credenciales por defecto
 
-El sistema deberá contar con un panel de administración en el que los analistas puedan:
+| Rol      | Usuario   | Contraseña   |
+|----------|-----------|--------------|
+| Analista | analista  | analista123  |
 
-* Visualizar la lista de practicantes registrados
-* Consultar la información detallada de cada practicante
-* Cambiar el estado del candidato a “viable” o “no viable”
+## API Endpoints
 
-### 3. Back-end
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | / | Página de inicio |
+| GET | /registro | Formulario de registro |
+| POST | /api/practicantes | Registrar practicante |
+| GET | /analista | Panel de analista (protegido) |
+| POST | /api/practicantes/{id}/evaluar | Evaluar candidato |
+| GET | /analista/historial/{id} | Ver historial |
+| GET | /api/practicantes/{id}/pdf | Descargar hoja de vida |
 
-La aplicación deberá incluir una API sencilla que permita:
 
-* Guardar la información de los practicantes
-* Consultar el listado de practicantes registrados
-* Actualizar el estado de evaluación de cada candidato
 
-La información deberá almacenarse en una base de datos local, como SQLite o una alternativa similar. Los archivos cargados deberán guardarse en una carpeta del servidor.
+## Capturas de Pantalla
 
-### 4. Funcionalidades adicionales opcionales
+### Página de Inicio
+![Inicio](Imagenes_README/Captura%20de%20pantalla_20260622_001740.png)
 
-Como mejora adicional, se podrá implementar:
+### Registro de Practicante
+![Registro](Imagenes_README/registro_Practicante.png)
 
-* Autenticación básica para restringir el acceso al panel de analistas mediante usuario y contraseña
-* Descarga de la hoja de vida desde el panel de analista
-
-### 5. Documentación
-
-El proyecto deberá incluir un archivo README con instrucciones claras para:
-
-* Instalar el proyecto
-* Ejecutar la aplicación localmente
-* Describir su funcionamiento general
-
-Si es posible, también se pueden incluir capturas de pantalla del sistema.
+### Panel del Analista
+![Panel Analista](Imagenes_README/panel_analista.png)
