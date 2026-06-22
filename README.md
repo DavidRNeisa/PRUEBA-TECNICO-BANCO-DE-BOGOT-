@@ -13,16 +13,50 @@ Aplicación web para el registro de practicantes universitarios y su evaluación
 
 ## Estructura del Proyecto
 
-├── src/main/java/com/banco/practicantes/
-│   ├── config/          # Seguridad y configuración
-│   ├── controllers/     # Controladores MVC
-│   ├── models/          # Entidades JPA
-│   ├── repositories/    # Interfaces JPA
-│   └── services/        # Lógica de negocio
-├── src/main/resources/
-│   ├── static/css/      # Estilos
-│   └── templates/       # Vistas Thymeleaf
-└── uploads/             # Hojas de vida PDF
+```
+PRUEBA-TECNICO-BANCO-DE-BOGOT/
+│
+├── run.sh                          # Script de inicio rápido
+├── pom.xml                         # Configuración Maven y dependencias
+├── README.md                       # Documentación del proyecto
+├── .gitignore                      # Archivos excluidos de Git
+│
+├── Imagenes_README/                # Capturas de pantalla
+│   ├── inicio.png
+│   ├── registro.png
+│   └── panel_analista.png
+│
+├── uploads/                        # Hojas de vida PDF subidas
+│   └── .gitkeep
+│
+└── src/
+    └── main/
+        ├── java/com/banco/practicantes/
+        │   ├── PracticantesApplication.java
+        │   ├── config/
+        │   │   └── SecurityConfig.java
+        │   ├── controllers/
+        │   │   └── PracticanteController.java
+        │   ├── models/
+        │   │   ├── Practicante.java
+        │   │   ├── Usuario.java
+        │   │   └── HistorialEvaluacion.java
+        │   ├── repositories/
+        │   │   ├── PracticanteRepository.java
+        │   │   ├── UsuarioRepository.java
+        │   │   └── HistorialEvaluacionRepository.java
+        │   └── services/
+        │       └── PracticanteService.java
+        └── resources/
+            ├── application.properties
+            ├── static/css/
+            │   └── estilos.css
+            └── templates/
+                ├── index.html
+                ├── registro.html
+                ├── analista.html
+                └── historial.html
+```
 
 ## Funcionalidades
 
@@ -57,8 +91,44 @@ spring.datasource.username=TU_USUARIO
 spring.datasource.password=TU_CONTRASEÑA
 
 ### Ejecutar
+Inicio Rápido
+Opción 1: Script automático (Recomendado)
+bash
+
+./run.sh
+
+El script realiza automáticamente:
+
+    Verifica que PostgreSQL esté corriendo (lo inicia si es necesario)
+
+    Crea la base de datos practicantes_db si no existe
+
+    Inicia la aplicación Spring Boot
+
+Al finalizar, accede a http://localhost:8080
+
+Credenciales: analista / analista123
+
+Para detener: Ctrl+C
+Opción 2: Ejecución manual
+1. Iniciar PostgreSQL
+bash
+
+sudo systemctl start postgresql
+
+2. Crear base de datos (primera vez)
+bash
+
+sudo -u postgres psql -c "CREATE DATABASE practicantes_db OWNER davidrneisa"
+
+3. Ejecutar la aplicación
+bash
+
 mvn spring-boot:run
-Acceder en: http://localhost:8080
+
+4. Acceder
+
+Abrir http://localhost:8080 en el navegador.
 
 ## Credenciales por defecto
 
