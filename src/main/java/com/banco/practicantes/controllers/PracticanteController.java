@@ -21,7 +21,11 @@ public class PracticanteController {
     }
     
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("total", service.contarTotal());
+        model.addAttribute("pendientes", service.contarPorEstado("Pendiente"));
+        model.addAttribute("viables", service.contarPorEstado("Viable"));
+        model.addAttribute("noViables", service.contarPorEstado("No Viable"));
         return "index";
     }
     

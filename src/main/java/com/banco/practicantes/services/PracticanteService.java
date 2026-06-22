@@ -39,10 +39,17 @@ public class PracticanteService {
         return repository.findAll();
     }
     
+    public long contarTotal() {
+        return repository.count();
+    }
+    
+    public long contarPorEstado(String estado) {
+        return repository.findByEstado(estado).size();
+    }
+    
     public List<Practicante> buscarConFiltros(String nombre, String correo, String carrera, 
                                                Integer semestre, String estado) {
         List<Practicante> todos = repository.findAll();
-        
         return todos.stream()
             .filter(p -> nombre == null || nombre.isEmpty() || 
                     p.getNombreCompleto().toLowerCase().contains(nombre.toLowerCase()))

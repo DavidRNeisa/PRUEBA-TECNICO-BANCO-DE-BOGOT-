@@ -9,22 +9,38 @@
 <body>
     <div class="container">
         <h1>Registro de Practicantes</h1>
-        <div th:if="${mensaje}" class="alert success" th:text="${mensaje}"></div>
+        
+        <div th:if="${mensaje}" class="exito-screen">
+            <div class="check-icon">✓</div>
+            <h2>¡Registro Exitoso!</h2>
+            <p th:text="${mensaje}"></p>
+            <p>Tu información ha sido enviada. Un analista revisará tu perfil.</p>
+            <a href="/" class="btn">Volver al inicio</a>
+        </div>
+        
         <div th:if="${error}" class="alert error" th:text="${error}"></div>
-        <form action="/api/practicantes" method="post" enctype="multipart/form-data">
+        
+        <form th:unless="${mensaje}" action="/api/practicantes" method="post" enctype="multipart/form-data" class="form-registro">
             <label>Nombre completo:</label>
-            <input type="text" name="nombreCompleto" required>
+            <input type="text" name="nombreCompleto" required placeholder="Ej: Juan Pérez">
+            
             <label>Correo electrónico:</label>
-            <input type="email" name="correoElectronico" required>
+            <input type="email" name="correoElectronico" required placeholder="Ej: juan@example.com">
+            
             <label>Carrera universitaria:</label>
-            <input type="text" name="carrera" required>
+            <input type="text" name="carrera" required placeholder="Ej: Ingeniería de Sistemas">
+            
             <label>Semestre actual:</label>
-            <input type="number" name="semestre" min="1" max="12" required>
+            <input type="number" name="semestre" min="1" max="12" required placeholder="Ej: 8">
+            
             <label>Hoja de vida (PDF):</label>
             <input type="file" name="pdf" accept=".pdf" required>
+            <small>Solo archivos PDF (máx. 10MB)</small>
+            
             <button type="submit">Enviar registro</button>
         </form>
-        <a href="/">Volver al inicio</a>
+        
+        <a href="/">← Volver al inicio</a>
     </div>
 </body>
 </html>
